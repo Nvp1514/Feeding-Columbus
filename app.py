@@ -29,7 +29,7 @@ def volunteer():
 def events():
   return render_template('events.html')
 
-@app.route('/contact.html', methods=["GET","HEAD"])
+@app.route('/contact.html', methods=["POST"])
 def contact():
   name = request.form['name']
   email = request.form['email']
