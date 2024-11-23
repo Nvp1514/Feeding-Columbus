@@ -1,6 +1,12 @@
-from flask import Flask , render_template
+from flask import Flask, render_template
+from pymongo import MongoClient
 
 app = Flask(__name__)
+
+client = MongoClient("mongodb+srv://natashapatel2015:<db_password>@cluster0.atpjq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+db = client['FCdatabase']
+collection = db['FCcollection']
+
 
 @app.route('/', methods=["GET", "HEAD"])
 def index():
@@ -22,9 +28,16 @@ def volunteer():
 def events():
   return render_template('events.html')
 
-@app.route('/contact.html', methods=["GET","HEAD"])
+@app.route('/contact.html', methods=['POST'])
 def contact():
-  return render_template('contact.html')
+  name = request.form['name']
+  email = request.form['email']
+  phone = request.form['phone']
+  message = request.form['message']
+
+  collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
+  
+  return redirect(url_for('index'))
 
 @app.route('/donate.html', methods=["GET","HEAD"])
 def donate():
