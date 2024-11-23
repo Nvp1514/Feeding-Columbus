@@ -31,14 +31,17 @@ def events():
 
 @app.route('/contact.html', methods=["GET","POST"])
 def contact():
-  name = request.form['name']
-  email = request.form['email']
-  phone = request.form['phone']
-  message = request.form['message']
+  if request.method == 'POST':
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
+    message = request.form['message']
 
-  collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
+    collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
   
-  return redirect(url_for('index'))
+    return redirect(url_for('index'))
+  else :
+    return render_template('contact.html')
 
 @app.route('/donate.html', methods=["GET","HEAD"])
 def donate():
