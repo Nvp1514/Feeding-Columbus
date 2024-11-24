@@ -48,7 +48,7 @@ def contact():
 
     collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
   
-    return redirect(url_for('index'))
+    return redirect(url_for('contact'))
   else :
     return render_template('contact.html')
 
