@@ -32,10 +32,10 @@ def events():
 @app.route('/contact.html', methods=["GET","POST"])
 def contact():
   if request.method == 'POST':
-    name = request.form['name']
-    email = request.form['email']
-    phone = request.form['phone']
-    message = request.form['message']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    phone = request.form.get('phone')
+    message = request.form.get('message')
 
     collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
   
