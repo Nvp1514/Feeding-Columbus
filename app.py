@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_pymongo import PyMongo
-from pymongo import MongoClient 
+from pymongo.mongo_client import MongoClient
 
 app = Flask(__name__)
 
