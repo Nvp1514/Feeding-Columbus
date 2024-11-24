@@ -1,10 +1,12 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_pymongo import PyMongo
 from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 app = Flask(__name__)
 
-client = MongoClient("mongodb+srv://natashapatel2015:<db_password>@cluster0.atpjq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+uri = "mongodb+srv://natashapatel2015:<db_password>@cluster0.atpjq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['FCdatabase']
 collection = db['FCcollection']
 
