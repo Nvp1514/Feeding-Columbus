@@ -54,7 +54,7 @@ def contact():
             # Insert into MongoDB
             collection.insert_one({'name': name, 'email': email, 'phone': phone, 'message': message})
             
-            return redirect(url_for('contact'))
+            return render_template('contact.html')
         except Exception as e:
             app.logger.error(f"Error: {e}")
             return "An error occurred while processing the form.", 500
