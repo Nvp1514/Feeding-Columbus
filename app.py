@@ -9,13 +9,17 @@ uri = "mongodb+srv://natashapatel2015:<feedingcolumbus>@cluster0.atpjq.mongodb.n
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 try:
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['FCdatabase']
+    collection = db['FCcollection']
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
+    collection.insert_one({"test": "success"})
+    print("Insert successful")
 except Exception as e:
     print(e)
 
-db = client['FCdatabase']
-collection = db['FCcollection']
+
 
 
 @app.route('/', methods=["GET", "HEAD"])
