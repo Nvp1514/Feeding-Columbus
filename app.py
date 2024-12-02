@@ -38,19 +38,29 @@ def volunteer():
 def events():
   return render_template('events.html')
 
-@app.route('/contact.html', methods=["GET","POST"])
+@app.route('/contact.html', methods=["GET", "POST"])
 def contact():
-  if request.method == 'POST':
-    name = request.form.get('name')
-    email = request.form.get('email')
-    phone = request.form.get('phone')
-    message = request.form.get('message')
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            message = request.form.get('message')
+            
+            # Ensure all fields are present
+            if not all([name, email, phone, message]):
+                raise ValueError("All fields are required.")
 
-    collection.insert_one({'name' : name, 'email' : email, 'phone' : phone, 'message' : message})
-  
-    return redirect(url_for('contact'))
-  else :
-    return render_template('contact.html')
+            # Insert into MongoDB
+            collection.insert_one({'name': name, 'email': email, 'phone': phone, 'message': message})
+            
+            return redirect(url_for('contact'))
+        except Exception as e:
+            app.logger.error(f"Error: {e}")
+            return "An error occurred while processing the form.", 500
+    else:
+        return render_template('contact.html')
+
 
 @app.route('/donate.html', methods=["GET","HEAD"])
 def donate():
